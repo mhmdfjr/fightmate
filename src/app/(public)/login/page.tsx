@@ -16,11 +16,15 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Play } from "lucide-react";
 
-export default function LoginPage({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
+// 1. Define a more accurate type for the page props
+type LoginPageProps = {
+  searchParams: {
+    message?: string;
+  };
+};
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
+  // 2. Use the new type here
   const signIn = async (formData: FormData) => {
     "use server";
 
@@ -77,7 +81,7 @@ export default function LoginPage({
           <form className="grid gap-4">
             {searchParams?.message && (
               <Alert variant="destructive">
-                <Play className="h-3 w-3" />
+                <Play className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
                 <AlertDescription>{searchParams.message}</AlertDescription>
               </Alert>
@@ -90,7 +94,7 @@ export default function LoginPage({
                 type="email"
                 placeholder="you@example.com"
                 required
-                className="py-3 px-4 text-base border border-border rounded-lg"
+                className="py-3 px-4 text-base"
               />
             </div>
             <div className="grid gap-2">
@@ -100,7 +104,7 @@ export default function LoginPage({
                 name="password"
                 type="password"
                 required
-                className="py-3 px-4 text-base border border-border rounded-lg"
+                className="py-3 px-4 text-base"
               />
             </div>
             <Button
