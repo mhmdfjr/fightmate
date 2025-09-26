@@ -15,17 +15,17 @@ export function createClient() {
         },
         set(name: string, value: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value, ...options })
-          } catch (error) {
-            // Can be ignored
-          }
+                cookieStore.set({ name, value, ...options })
+            } catch (_error) { // Changed 'error' to '_error'
+                // The `set` method was called from a Server Component...
+            }
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: '', ...options })
-          } catch (error) {
-            // Can be ignored
-          }
+                cookieStore.set({ name, value: '', ...options })
+            } catch (_error) { // Changed 'error' to '_error'
+                // The `delete` method was called from a Server Component...
+            }
         },
       },
     }

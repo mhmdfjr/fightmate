@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { handleSwipe } from "@/app/actions/swipeActions";
 import { toast } from "sonner";
 import Image from "next/image"; // Make sure Image is imported
@@ -32,7 +32,11 @@ export default function FighterStack({
 }: FighterStackProps) {
   const [fighterList, setFighterList] = useState(fighters);
 
-  const handleDragEnd = async (event: any, info: any, swipedUserId: string) => {
+  const handleDragEnd = async (
+    event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+    swipedUserId: string
+  ) => {
     const swipeDistance = info.offset.x;
 
     if (Math.abs(swipeDistance) > swipeThreshold) {

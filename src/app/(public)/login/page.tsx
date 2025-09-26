@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import {
@@ -117,7 +116,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
         </CardContent>
         <CardFooter>
           <p className="w-full text-center text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account? {/* Changed from Don't */}
             <Link
               href="/signup"
               className="text-accent hover:underline font-semibold"
