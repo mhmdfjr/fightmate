@@ -32,10 +32,9 @@ export default function FightMatePage() {
 
               <div className="space-y-4">
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight text-balance">
-                  {/* The ultimate */} This is{" "}
-                  <span className="text-accent">Tinder</span> but
+                  This is <span className="text-accent">Tinder</span> but
                   <span className="block">Not for Date,</span>
-                  It's for <span className="text-accent">Fighting</span>
+                  It&apos;s for <span className="text-accent">Fighting</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0 leading-relaxed">
                   Connect with fighters worldwide. Match based on skill, weight,
@@ -160,7 +159,7 @@ export default function FightMatePage() {
                   <p className="text-muted-foreground mb-6 leading-relaxed">
                     Browse fighter profiles filtered by weight class, experience
                     level, and location. Swipe right to show interest, and when
-                    they swipe back, it's a match.
+                    they swipe back, it&apos;s a match.
                   </p>
 
                   <div className="relative w-full h-[300px] mx-auto rounded-lg overflow-hidden shadow-lg">
