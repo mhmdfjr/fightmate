@@ -1,9 +1,8 @@
-// src/app/signup/page.tsx
 "use client";
 
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { useSearchParams } from "next/navigation"; // 1. Import the hook
+import { useSearchParams } from "next/navigation";
 import { signup } from "@/app/auth/actions";
 import {
   Card,
@@ -21,7 +20,6 @@ import Link from "next/link";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Play } from "lucide-react";
 
-// A submit button with a pending state for better UX
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -35,11 +33,14 @@ function SubmitButton() {
   );
 }
 
-// 2. Remove searchParams from the function's props
-export default function SignupPage() {
+export default function SignupPageWrapper() {
+  return <SignupPage />;
+}
+
+function SignupPage() {
   const [role, setRole] = useState<"fighter" | "referee">("fighter");
-  const searchParams = useSearchParams(); // 3. Call the hook to get the params
-  const message = searchParams.get("message"); // 4. Get the specific message value
+  const searchParams = useSearchParams();
+  const message = searchParams?.get("message") || null;
 
   return (
     <div className="flex justify-center items-center min-h-screen h-full grid-pattern hero-gradient p-4 pt-24 sm:pt-4">
@@ -53,7 +54,6 @@ export default function SignupPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {/* 5. Use the message variable to conditionally show the alert */}
           <form action={signup} className="grid gap-4">
             {message && (
               <Alert variant="destructive">
@@ -62,7 +62,7 @@ export default function SignupPage() {
                 <AlertDescription>{message}</AlertDescription>
               </Alert>
             )}
-            {/* ... rest of your form ... */}
+            {/* ...rest of form remains unchanged */}
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
