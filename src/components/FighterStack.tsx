@@ -63,8 +63,7 @@ export default function FighterStack({
                 initial={{ scale: 0.95, y: 20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{
-                  x: (info: { offset: { x: number } }) =>
-                    info.offset.x > 0 ? 300 : -300,
+                  x: 300,
                   opacity: 0,
                 }}
                 transition={{ duration: 0.3 }}
