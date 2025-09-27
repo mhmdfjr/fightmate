@@ -15,15 +15,16 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Play } from "lucide-react";
 
-// 1. Define a more accurate type for the page props
-type LoginPageProps = {
-  searchParams: {
-    message?: string;
-  };
-};
+// ✅ Awaited ensures compatibility with Next.js' inferred Promise type
+type SearchParams = Awaited<{
+  [key: string]: string | string[] | undefined;
+}>;
 
-export default function LoginPage({ searchParams }: LoginPageProps) {
-  // 2. Use the new type here
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams?: SearchParams;
+}) {
   const signIn = async (formData: FormData) => {
     "use server";
 
@@ -40,7 +41,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
       return redirect("/login?message=Could not authenticate user");
     }
 
-    // After successful login, get user's role to redirect
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -116,7 +116,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
         </CardContent>
         <CardFooter>
           <p className="w-full text-center text-sm text-muted-foreground">
-            Don&apos;t have an account? {/* Changed from Don't */}
+            Don&apos;t have an account?{" "}
             <Link
               href="/signup"
               className="text-accent hover:underline font-semibold"
