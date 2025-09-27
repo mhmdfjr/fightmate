@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createClient } from '@/utils/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
-  const { supabase, response } = createClient(request)
+  const { supabase, response } = await createClient(request)
 
   // This will refresh the session if it's expired
   const {

@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 
 export default async function ProfilePage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

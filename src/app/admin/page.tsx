@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge"; // You may need to install this: npx shadcn-ui@latest add badge
 
 export default async function AdminDashboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Fetch all profiles from the database
   const { data: profiles, error } = await supabase

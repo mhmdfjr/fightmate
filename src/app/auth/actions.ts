@@ -8,7 +8,7 @@ import { headers } from 'next/headers'
 export async function login(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Step 1: Sign in the user
   const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -79,7 +79,7 @@ export async function login(formData: FormData) {
 //   return redirect('/confirm-email')
 // }
 export async function signup(formData: FormData) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // ✅ Must await
   const headersList = await headers();
@@ -112,7 +112,7 @@ export async function signup(formData: FormData) {
 }
 
 export async function signOut() {
-  const supabase = createClient()
+  const supabase = await createClient()
   await supabase.auth.signOut()
   return redirect('/login')
 }

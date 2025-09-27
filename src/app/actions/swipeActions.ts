@@ -4,7 +4,7 @@
 import { createClient } from '@/utils/supabase/server'
 
 export async function handleSwipe(swiperId: string, swipedId: string, liked: boolean) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // ... (insert swipe logic) ...
   const { error: swipeError } = await supabase.from('swipes').insert({

@@ -12,7 +12,7 @@ if (!supabaseUrl || !serviceKey) {
   throw new Error("Supabase URL or Service Key is missing in .env.local");
 }
 
-const supabase = createClient(supabaseUrl, serviceKey);
+const supabase = await createClient(supabaseUrl, serviceKey);
 
 async function createDummyUsers() {
   console.log('Starting to seed data...');

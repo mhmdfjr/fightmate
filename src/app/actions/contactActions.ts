@@ -14,7 +14,7 @@ export async function submitContactForm(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const name = formData.get('name') as string
   const email = formData.get('email') as string

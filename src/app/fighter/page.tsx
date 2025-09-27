@@ -4,7 +4,7 @@ import FighterStack from "@/components/FighterStack";
 import { ProfileData } from "@/types/profile";
 
 export default async function FighterHome() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
