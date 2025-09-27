@@ -1,7 +1,7 @@
 // src/app/fighter/profile/page.tsx
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { signOut } from "@/app/auth/actions"; // 2. Import the signOut server action
+import { signOut } from "@/app/auth/actions";
 import Image from "next/image";
 import {
   Card,
@@ -11,7 +11,8 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import EditProfileModal from "@/components/EditProfileModal"; // Import the new modal component
+import EditProfileModal from "@/components/EditProfileModal";
+import { ProfileData } from "@/types/profile";
 import {
   MapPin,
   Weight,
@@ -21,7 +22,7 @@ import {
   Trophy,
   XCircle,
   LogOut,
-} from "lucide-react"; // Icons for stats
+} from "lucide-react";
 
 export default async function ProfilePage() {
   const supabase = createClient();
@@ -38,32 +39,33 @@ export default async function ProfilePage() {
     .from("profiles")
     .select(
       `
-      id,
-      username,
-      full_name,
-      avatar_url,
-      fighter_stats (
-        user_id,
-        weight_kg,
-        height_cm,
-        style,
-        experience,
-        location,
-        wins,
-        losses
-      )
-    `
+    id,
+    username,
+    full_name,
+    avatar_url,
+    fighter_stats!inner (
+      user_id,
+      weight_kg,
+      height_cm,
+      style,
+      experience,
+      location,
+      wins,
+      losses
+    )
+  `
     )
     .eq("id", user.id)
-    .single();
+    .single<ProfileData>();
 
   if (error || !profile) {
+    // Cannot find name 'profile'.
     return (
       <p className="text-white">Could not load profile. {error?.message}</p>
     );
   }
 
-  const fighterStats = profile.fighter_stats;
+  const fighterStats = profile?.fighter_stats || null;
 
   return (
     <div className="h-dvh bg-gradient-to-br from-gray-900 to-black text-white p-4 md:p-8 flex flex-col items-center justify-center">
@@ -99,31 +101,31 @@ export default async function ProfilePage() {
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-gray-400 text-sm">
               {fighterStats?.location && (
                 <span className="flex items-center gap-1">
-                  <MapPin className="h-4 w-4 text-red-500" />{" "}
+                  <MapPin className="h-4 w-4 text-red-500" />
                   {fighterStats.location}
                 </span>
               )}
               {fighterStats?.weight_kg && (
                 <span className="flex items-center gap-1">
-                  <Weight className="h-4 w-4 text-red-500" />{" "}
+                  <Weight className="h-4 w-4 text-red-500" />
                   {fighterStats.weight_kg} kg
                 </span>
               )}
               {fighterStats?.height_cm && (
                 <span className="flex items-center gap-1">
-                  <Ruler className="h-4 w-4 text-red-500" />{" "}
+                  <Ruler className="h-4 w-4 text-red-500" />
                   {fighterStats.height_cm} cm
                 </span>
               )}
               {fighterStats?.style && (
                 <span className="flex items-center gap-1">
-                  <Swords className="h-4 w-4 text-red-500" />{" "}
+                  <Swords className="h-4 w-4 text-red-500" />
                   {fighterStats.style}
                 </span>
               )}
               {fighterStats?.experience && (
                 <span className="flex items-center gap-1">
-                  <TrendingUp className="h-4 w-4 text-red-500" />{" "}
+                  <TrendingUp className="h-4 w-4 text-red-500" />
                   {fighterStats.experience.charAt(0).toUpperCase() +
                     fighterStats.experience.slice(1)}
                 </span>
@@ -131,15 +133,17 @@ export default async function ProfilePage() {
             </div>
           </CardHeader>
           <CardContent className="mt-6 w-full">
-            <EditProfileModal profile={profile}>
-              <Button className="w-full bg-red-600 hover:bg-red-700">
-                Edit Profile
-              </Button>
-            </EditProfileModal>
+            {profile && (
+              <EditProfileModal profile={profile}>
+                <Button className="w-full bg-red-600 hover:bg-red-700">
+                  Edit Profile
+                </Button>
+              </EditProfileModal>
+            )}
           </CardContent>
         </Card>
 
-        {/* Fight Record Card (Read-Only) */}
+        {/* Fight Record Card */}
         <Card className="md:col-span-1 bg-gray-950 text-white border-gray-800 shadow-lg p-6 flex flex-col items-center text-center">
           <CardHeader className="w-full">
             <CardTitle className="text-2xl font-bold mb-4">

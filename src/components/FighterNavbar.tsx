@@ -3,8 +3,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LayoutGrid, MessageSquare, User } from "lucide-react";
-import { cn } from "@/lib/utils"; // Make sure you have this utility from shadcn
+import { Home, LayoutGrid, MessageSquare, User, Swords } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function FighterNavbar() {
   const pathname = usePathname();
@@ -19,40 +19,41 @@ export default function FighterNavbar() {
   return (
     <>
       {/* --- Desktop Navbar (Top) --- */}
-      {/* The classes below have been updated */}
       <nav
         className={cn(
-          "hidden md:flex justify-between items-center p-4 border-b border-gray-800",
+          "hidden md:flex justify-between items-center border-b border-gray-800",
           "fixed top-0 left-0 right-0 z-20 bg-gray-900/80 backdrop-blur-sm"
         )}
       >
-        <Link href="/fighter" className="text-2xl font-bold text-red-500">
-          FightMate
-        </Link>
-        <div className="flex items-center gap-4">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-red-600 text-white"
-                    : "text-gray-300 hover:bg-gray-800"
-                )}
-              >
-                <item.icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/fighter" className="flex items-center gap-2">
+            <Swords className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
+            <span className="text-xl sm:text-2xl font-bold">FightMate</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2 rounded-md px-3 py-2 transition-colors text-sm font-semibold",
+                    isActive
+                      ? "bg-accent hover:bg-accent/90 text-white"
+                      : "text-muted-foreground hover:text-accent "
+                  )}
+                >
+                  <item.icon className="h-5 w-5" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </nav>
 
       {/* --- Mobile Navbar (Bottom) --- */}
-      {/* This part remains unchanged */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-black/80 backdrop-blur-sm border-t border-gray-800 p-2 flex justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.href;

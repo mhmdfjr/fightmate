@@ -15,16 +15,13 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Play } from "lucide-react";
 
-// ✅ Awaited ensures compatibility with Next.js' inferred Promise type
-type SearchParams = Awaited<{
-  [key: string]: string | string[] | undefined;
-}>;
-
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams?: SearchParams;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const resolvedSearchParams = await searchParams;
+
   const signIn = async (formData: FormData) => {
     "use server";
 
@@ -57,7 +54,7 @@ export default function LoginPage({
     if (profile?.role === "fighter") {
       return redirect("/fighter");
     } else if (profile?.role === "referee") {
-      return redirect("/referee/dashboard");
+      return redirect("/referee");
     } else if (profile?.role === "admin") {
       return redirect("/admin");
     }
@@ -78,11 +75,13 @@ export default function LoginPage({
         </CardHeader>
         <CardContent>
           <form className="grid gap-4">
-            {searchParams?.message && (
+            {resolvedSearchParams?.message && (
               <Alert variant="destructive">
                 <Play className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{searchParams.message}</AlertDescription>
+                <AlertDescription>
+                  {resolvedSearchParams.message}
+                </AlertDescription>
               </Alert>
             )}
             <div className="grid gap-2">

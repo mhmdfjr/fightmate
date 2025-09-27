@@ -5,25 +5,13 @@ import { useState } from "react";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { handleSwipe } from "@/app/actions/swipeActions";
 import { toast } from "sonner";
-import Image from "next/image"; // Make sure Image is imported
-
-// The type is updated to include avatar_url
-type FighterProfile = {
-  id: string;
-  username: string | null;
-  avatar_url: string | null; // Added for the profile image
-  fighter_stats: {
-    weight_kg: number | null;
-    height_cm: number | null;
-    style: string | null;
-  } | null;
-};
+import Image from "next/image";
+import { ProfileData } from "@/types/profile";
 
 type FighterStackProps = {
-  fighters: FighterProfile[];
+  fighters: ProfileData[];
   currentUserId: string;
 };
-
 const swipeThreshold = 100;
 
 export default function FighterStack({
@@ -82,14 +70,13 @@ export default function FighterStack({
                 transition={{ duration: 0.3 }}
               >
                 <div className="relative w-[320px] h-[500px] rounded-xl bg-gray-800 border-2 border-gray-700 shadow-lg p-6 flex flex-col justify-end overflow-hidden">
-                  {/* --- IMAGE ADDED HERE --- */}
                   {fighter.avatar_url && (
                     <Image
                       src={fighter.avatar_url}
                       alt={`Profile image of ${fighter.username}`}
-                      fill // This makes the image fill the parent div
-                      className="object-cover" // Ensures the image covers the area without stretching
-                      priority={true} // Prioritize loading the top card's image
+                      fill
+                      className="object-cover"
+                      priority={true}
                     />
                   )}
 

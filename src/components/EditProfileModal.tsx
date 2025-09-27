@@ -1,4 +1,3 @@
-// src/components/EditProfileModal.tsx
 "use client";
 
 import {
@@ -11,24 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import ProfileEditForm from "./ProfileEditForm";
 import { useState } from "react";
-
-// ... (your type definitions)
-type ProfileData = {
-  id: string;
-  username: string | null;
-  full_name: string | null;
-  avatar_url: string | null;
-  fighter_stats: {
-    user_id: string;
-    weight_kg: number | null;
-    height_cm: number | null;
-    style: string | null;
-    experience: "amateur" | "pro" | null;
-    location: string | null;
-    wins: number;
-    losses: number;
-  } | null;
-};
+import { ProfileData } from "@/types/profile";
 
 type EditProfileModalProps = {
   profile: ProfileData;
@@ -52,13 +34,11 @@ export default function EditProfileModal({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      {/* --- CHANGE IS HERE --- */}
       <DialogContent className="sm:max-w-[700px] bg-gray-900 text-white border-gray-800 max-h-[90dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you&apos;re done.{" "}
-            {/* Changed from you're */}
           </DialogDescription>
         </DialogHeader>
         <ProfileEditForm

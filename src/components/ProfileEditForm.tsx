@@ -15,29 +15,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-
-// Define the type for the profile data passed as a prop
-type ProfileData = {
-  id: string;
-  username: string | null;
-  full_name: string | null;
-  avatar_url: string | null;
-  fighter_stats: {
-    user_id: string;
-    weight_kg: number | null;
-    height_cm: number | null;
-    style: string | null;
-    experience: "amateur" | "pro" | null;
-    location: string | null;
-    wins: number;
-    losses: number;
-  } | null;
-};
+import { ProfileData } from "@/types/profile";
 
 type ProfileEditFormProps = {
   profile: ProfileData;
-  onSuccess: () => void; // New prop to close modal on success
-  onCancel: () => void; // New prop to handle cancel
+  onSuccess: () => void;
+  onCancel: () => void;
 };
 
 export default function ProfileEditForm({
@@ -62,8 +45,8 @@ export default function ProfileEditForm({
       toast.error(result.error.message);
     } else {
       toast.success("Profile updated successfully!");
-      setAvatarPreview(null); // Clear preview after successful upload
-      onSuccess(); // Call the success callback to close the modal
+      setAvatarPreview(null);
+      onSuccess();
     }
     setIsSubmitting(false);
   };

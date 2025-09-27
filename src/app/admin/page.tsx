@@ -49,8 +49,8 @@ export default async function AdminDashboard() {
                       profile.role === "admin"
                         ? "destructive"
                         : profile.role === "referee"
-                        ? "default"
-                        : "secondary"
+                        ? "secondary"
+                        : "default"
                     }
                   >
                     {profile.role}

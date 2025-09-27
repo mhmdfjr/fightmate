@@ -50,12 +50,44 @@ export async function login(formData: FormData) {
   }
 }
 
+// export async function signup(formData: FormData) {
+//   const supabase = createClient()
+//   const origin = headers().get('origin')
+//   const email = formData.get('email') as string
+//   const password = formData.get('password') as string
+//   const role = formData.get('role') as 'fighter' | 'referee'
+
+//   const { error } = await supabase.auth.signUp({
+//     email,
+//     password,
+//     options: {
+//       emailRedirectTo: `${origin}/auth/callback`,
+//       data: {
+//         role: role,
+//         username: formData.get('username') as string,
+//         weight_kg: formData.get('weight_kg') as string,
+//         height_cm: formData.get('height_cm') as string,
+//         certification_details: formData.get('certification_details') as string,
+//       },
+//     },
+//   })
+
+//   if (error) {
+//     return redirect('/login?message=Could not authenticate user')
+//   }
+
+//   return redirect('/confirm-email')
+// }
 export async function signup(formData: FormData) {
-  const supabase = createClient()
-  const origin = headers().get('origin')
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-  const role = formData.get('role') as 'fighter' | 'referee'
+  const supabase = createClient();
+
+  // ✅ Must await
+  const headersList = await headers();
+  const origin = headersList.get("origin");
+
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const role = formData.get("role") as "fighter" | "referee";
 
   const { error } = await supabase.auth.signUp({
     email,
@@ -64,19 +96,19 @@ export async function signup(formData: FormData) {
       emailRedirectTo: `${origin}/auth/callback`,
       data: {
         role: role,
-        username: formData.get('username') as string,
-        weight_kg: formData.get('weight_kg') as string,
-        height_cm: formData.get('height_cm') as string,
-        certification_details: formData.get('certification_details') as string,
+        username: formData.get("username") as string,
+        weight_kg: formData.get("weight_kg") as string,
+        height_cm: formData.get("height_cm") as string,
+        certification_details: formData.get("certification_details") as string,
       },
     },
-  })
+  });
 
   if (error) {
-    return redirect('/login?message=Could not authenticate user')
+    return redirect("/login?message=Could not authenticate user");
   }
 
-  return redirect('/confirm-email')
+  return redirect("/confirm-email");
 }
 
 export async function signOut() {
